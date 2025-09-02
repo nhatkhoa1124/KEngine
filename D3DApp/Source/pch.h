@@ -8,4 +8,3 @@
 #define HInstance() GetModuleHandle(NULL)
 
 #include "KEngine.h"
-#include "Common/Logger.h"

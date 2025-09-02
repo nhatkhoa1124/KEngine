@@ -141,6 +141,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Common\CmdLineArgs.h" />
     <ClInclude Include="Source\Common\Logger.h" />
     <ClInclude Include="Source\Common\KTime.h" />
     <ClInclude Include="Source\Core\Core.h" />
@@ -150,19 +151,28 @@
     <ClInclude Include="Source\Engine\CoreEngine.h" />
     <ClInclude Include="Source\Engine\Simulation.h" />
     <ClInclude Include="Source\KEngine.h" />
-    <ClInclude Include="Source\Platform\WIN32\IApplication.h" />
-    <ClInclude Include="Source\Platform\WIN32\WinEntry.h" />
+    <ClInclude Include="Source\Core\Platform\WIN32\IApplication.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="Source\Core\Platform\WIN32\WinEntry.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Common\CmdLineArgs.cpp" />
     <ClCompile Include="Source\Common\Logger.cpp" />
     <ClCompile Include="Source\Common\KTime.cpp" />
     <ClCompile Include="Source\Core\Core.cpp" />
-    <ClCompile Include="Source\Core\CoreMinimal.cpp" />
     <ClCompile Include="Source\Core\PerGameSettings.cpp" />
+    <ClCompile Include="Source\Core\Platform\WIN32\IApplication.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="Source\Engine\CoreEngine.cpp" />
     <ClCompile Include="Source\Engine\Simulation.cpp" />
     <ClCompile Include="Source\KEngine.cpp" />
-    <ClCompile Include="Source\Platform\WIN32\IApplication.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KEngine", "KEngine\KEngine.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "D3DApp", "D3DApp\D3DApp.vcxproj", "{B22062E1-18E3-4ABA-B0C4-9BCD8A8DCCCA}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DirectX12", "DirectX12\DirectX12.vcxproj", "{A854A9FA-6482-4B5A-B07F-465727217131}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -31,6 +33,14 @@ Global
 		{B22062E1-18E3-4ABA-B0C4-9BCD8A8DCCCA}.Release|x64.Build.0 = Release|x64
 		{B22062E1-18E3-4ABA-B0C4-9BCD8A8DCCCA}.Release|x86.ActiveCfg = Release|Win32
 		{B22062E1-18E3-4ABA-B0C4-9BCD8A8DCCCA}.Release|x86.Build.0 = Release|Win32
+		{A854A9FA-6482-4B5A-B07F-465727217131}.Debug|x64.ActiveCfg = Debug|x64
+		{A854A9FA-6482-4B5A-B07F-465727217131}.Debug|x64.Build.0 = Debug|x64
+		{A854A9FA-6482-4B5A-B07F-465727217131}.Debug|x86.ActiveCfg = Debug|Win32
+		{A854A9FA-6482-4B5A-B07F-465727217131}.Debug|x86.Build.0 = Debug|Win32
+		{A854A9FA-6482-4B5A-B07F-465727217131}.Release|x64.ActiveCfg = Release|x64
+		{A854A9FA-6482-4B5A-B07F-465727217131}.Release|x64.Build.0 = Release|x64
+		{A854A9FA-6482-4B5A-B07F-465727217131}.Release|x86.ActiveCfg = Release|Win32
+		{A854A9FA-6482-4B5A-B07F-465727217131}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -2,23 +2,27 @@
 
 #include "Platform/WIN32/IApplication.h"
 
-namespace KEngine
+class KENGINE_API CoreEngine;
+
+namespace Engine
 {
+	extern CoreEngine gKEngine;
+
 	enum EngineMode : INT
 	{
 		NONE,
 		DEBUG,
 		RELEASE,
-		EDTIOR,
+		EDITOR,
 		SERVER
 	};
-
-	class KENGINE_API Simulation : public Win32::IApplication
-	{
-	public:
-		Simulation();
-		~Simulation();
-	private:
-		EngineMode mEngineMode;
-	};
 }
+
+class KENGINE_API CoreEngine
+{
+public:
+	CoreEngine();
+	~CoreEngine();
+private:
+	Engine::EngineMode mEngineMode;
+};

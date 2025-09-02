@@ -18,10 +18,10 @@
     <ClInclude Include="Source\KEngine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Platform\WIN32\IApplication.h">
+    <ClInclude Include="Source\Core\Platform\WIN32\IApplication.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Platform\WIN32\WinEntry.h">
+    <ClInclude Include="Source\Core\Platform\WIN32\WinEntry.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Common\Logger.h">
@@ -48,12 +48,12 @@
     <ClInclude Include="Source\Engine\Simulation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Common\CmdLineArgs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\KEngine.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Platform\WIN32\IApplication.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Common\Logger.cpp">
@@ -68,13 +68,16 @@
     <ClCompile Include="Source\Core\Core.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Core\CoreMinimal.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Engine\CoreEngine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Engine\Simulation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Common\CmdLineArgs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Core\Platform\WIN32\IApplication.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
