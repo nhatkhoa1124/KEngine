@@ -148,17 +148,11 @@
     <ClInclude Include="Source\Core\CoreDefines.h" />
     <ClInclude Include="Source\Core\CoreMinimal.h" />
     <ClInclude Include="Source\Core\PerGameSettings.h" />
+    <ClInclude Include="Source\Core\Platform\WIN32\IApplication.h" />
+    <ClInclude Include="Source\Core\Platform\WIN32\WinEntry.h" />
     <ClInclude Include="Source\Engine\CoreEngine.h" />
     <ClInclude Include="Source\Engine\Simulation.h" />
     <ClInclude Include="Source\KEngine.h" />
-    <ClInclude Include="Source\Core\Platform\WIN32\IApplication.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="Source\Core\Platform\WIN32\WinEntry.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Common\CmdLineArgs.cpp" />
@@ -166,10 +160,7 @@
     <ClCompile Include="Source\Common\KTime.cpp" />
     <ClCompile Include="Source\Core\Core.cpp" />
     <ClCompile Include="Source\Core\PerGameSettings.cpp" />
-    <ClCompile Include="Source\Core\Platform\WIN32\IApplication.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
-    </ClCompile>
+    <ClCompile Include="Source\Core\Platform\WIN32\IApplication.cpp" />
     <ClCompile Include="Source\Engine\CoreEngine.cpp" />
     <ClCompile Include="Source\Engine\Simulation.cpp" />
     <ClCompile Include="Source\KEngine.cpp" />
