@@ -4,7 +4,6 @@
 #include "IApplication.h"
 
 extern Win32::IApplication* EntryApplication();
-
 INT CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 {
 	auto EntryApp = EntryApplication();

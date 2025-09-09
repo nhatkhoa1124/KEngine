@@ -4,7 +4,8 @@
 
 ENTRYAPP(Application)
 
-Application::Application()
+Application::Application() :
+	mAppWindow{}
 {
 
 }
@@ -24,13 +25,12 @@ void Application::SetupPerGameSettings()
 
 void Application::Initialize()
 {
-	Logger::GetInstance().PrintLog(L"hello %s", L"dx12");
-	MessageBox(0, L"Loaded up", 0, 0);
+	mAppWindow.InitializeWindow(L"Title", L"Class name", 1280, 720);
 }
 
 void Application::Update()
 {
-	MessageBox(0, L"Updating", 0, 0);
+	mAppWindow.UpdateWindow(mAppWindow.GetHandle());
 }
 
 void Application::Exit()

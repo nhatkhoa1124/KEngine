@@ -2,20 +2,20 @@
 
 #include "cassert"
 
-std::atomic<PerGameSettings*> PerGameSettings::instance{ nullptr };
+std::atomic<PerGameSettings*> PerGameSettings::mInstance{ nullptr };
 std::mutex PerGameSettings::creationMutex;
 
 PerGameSettings& PerGameSettings::GetInstance()
 {
-	PerGameSettings* tmp = instance.load(std::memory_order_acquire);
+	PerGameSettings* tmp = mInstance.load(std::memory_order_acquire);
 	if (tmp == nullptr)
 	{
 		std::lock_guard<std::mutex> lock(creationMutex);
-		tmp = instance.load(std::memory_order_relaxed);
+		tmp = mInstance.load(std::memory_order_relaxed);
 		if (tmp == nullptr)
 		{
 			tmp = new PerGameSettings();
-			instance.store(tmp, std::memory_order_release);
+			mInstance.store(tmp, std::memory_order_release);
 		}
 	}
 	return *tmp;

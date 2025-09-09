@@ -1,5 +1,6 @@
 #pragma once
 #include <cstdint>
+#include <vector>
 
 namespace KRender
 {
@@ -7,7 +8,7 @@ namespace KRender
 	class KRENDER_API Renderer
 	{
 	public:
-		Renderer();
+		Renderer(HWND handle);
 		~Renderer();
 		void CreateDevice();
 		void CreateFence();
@@ -15,33 +16,54 @@ namespace KRender
 		void CreateSwapChain();
 		void SetupDescriptorSize();
 		void CreateFactory();
+		void CreateRtvAndDsvHeap();
 		void CheckMSAASupport4X();
-		inline void EnableDebugLayer() const
+		void CreateRenderTargetView();
+		void CreateDepthStencilBufferAndView();
+		D3D12_CPU_DESCRIPTOR_HANDLE CurrentBackBufferView() const;
+		D3D12_CPU_DESCRIPTOR_HANDLE DepthStencilView() const;
+
+		void EnableDebugLayer() const;
+		inline void SetWindowed(bool isWindowed)
 		{
-			if (mDebug)
-			{
-				ComPtr<ID3D12Debug> debugController;
-				ThrowIfFailed(D3D12GetDebugInterface(IID_PPV_ARGS(&debugController)));
-				debugController->EnableDebugLayer();
-			}
+			mIsWindowed = isWindowed;
 		}
+		inline void SetMsaaState(bool state)
+		{
+			m4xMsaaState = state;
+		}
+
 	private:
+		// API members
 		ComPtr<ID3D12Device> mDevice;
 		ComPtr<IDXGIFactory6> mDxgiFactory;
 		ComPtr<ID3D12Fence> mFence;
 		ComPtr<ID3D12CommandQueue> mCommandQueue;
 		ComPtr<ID3D12CommandAllocator> mCommandAllocator;
 		ComPtr<ID3D12GraphicsCommandList> mCommandList;
-
-		DXGI_FORMAT mBackBufferFormat = DXGI_FORMAT_R8G8B8A8_UNORM;
-
+		ComPtr<IDXGISwapChain> mSwapChain;
+		std::vector<ComPtr<ID3D12Resource>> mSwapChainBuffers;
+		ComPtr<ID3D12Resource> mDepthStencilBuffer;
+		ComPtr<ID3D12DescriptorHeap> mRtvHeap;
+		ComPtr<ID3D12DescriptorHeap> mDsvHeap;
 		uint32_t mRtvDescriptorSize;
 		uint32_t mDsvDescriptorSize;
 		uint32_t mCbvDescriptorSize;
 		uint32_t m4xMsaaQualityLevel;
-		const uint32_t mClientWidth = 1280;
-		const uint32_t mClientHeight = 720;
+		bool m4xMsaaState;
+
+		//Helper members
+		HWND mWinHandle;
+		bool mIsWindowed;
+
+		// Hard-coded values
+		static constexpr DXGI_FORMAT mBackBufferFormat = DXGI_FORMAT_R8G8B8A8_UNORM;
+		static constexpr DXGI_FORMAT mDepthStencilFormat = DXGI_FORMAT_R8G8B8A8_UNORM;
+		static constexpr uint32_t mSwapChainBufferCount = 2; //Double-buffering
+		const uint32_t mCurrBackBuffer = 0;
+
 	private:
+		// Macros
 #ifdef _DEBUG
 		bool mDebug = true;
 #else

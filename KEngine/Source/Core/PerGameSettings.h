@@ -26,7 +26,7 @@ private:
 	PerGameSettings();
 	~PerGameSettings();
 
-	static std::atomic<PerGameSettings*> instance;
+	static std::atomic<PerGameSettings*> mInstance;
 	static std::mutex creationMutex;
 
 	WCHAR mGameName[MAX_NAME_STRING];

@@ -2,6 +2,7 @@
 
 #define ENTRYAPP(x) Win32::IApplication* EntryApplication() {return new x;}
 
+
 namespace Win32
 {
 	class KENGINE_API IApplication
