@@ -162,7 +162,6 @@
     <ClCompile Include="Source\Core\Core.cpp" />
     <ClCompile Include="Source\Core\PerGameSettings.cpp" />
     <ClCompile Include="Source\Core\Platform\WIN32\EngineWindow.cpp" />
-    <ClCompile Include="Source\Core\Platform\WIN32\IApplication.cpp" />
     <ClCompile Include="Source\Engine\CoreEngine.cpp" />
     <ClCompile Include="Source\Engine\Simulation.cpp" />
     <ClCompile Include="Source\KEngine.cpp" />

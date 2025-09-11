@@ -10,8 +10,8 @@ namespace Win32
 		EngineWindow();
 		~EngineWindow();
 		void InitializeWindow(const std::wstring& title, const std::wstring& className, UINT width, UINT height);
-		void UpdateWindow(HWND hWnd);
-		inline HWND GetHandle() { return mHWnd; }
+		void RenderWindow();
+		inline HWND GetHandle() const { return mHWnd; }
 	private:
 		static LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 		LRESULT MessageHandler(UINT msg, WPARAM wParam, LPARAM lParam);

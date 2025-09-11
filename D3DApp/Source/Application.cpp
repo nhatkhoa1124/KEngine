@@ -25,12 +25,13 @@ void Application::SetupPerGameSettings()
 
 void Application::Initialize()
 {
-	mAppWindow.InitializeWindow(L"Title", L"Class name", 1280, 720);
+	PerGameSettings& settings = PerGameSettings::GetInstance();
+	mAppWindow.InitializeWindow(settings.GetGameName(), settings.GetShortName(), 1280, 720);
 }
 
 void Application::Update()
 {
-	mAppWindow.UpdateWindow(mAppWindow.GetHandle());
+	mAppWindow.RenderWindow();
 }
 
 void Application::Exit()

@@ -20,6 +20,8 @@ namespace KRender
 		void CheckMSAASupport4X();
 		void CreateRenderTargetView();
 		void CreateDepthStencilBufferAndView();
+		void SetViewport();
+		void SetScissorRectangle();
 		D3D12_CPU_DESCRIPTOR_HANDLE CurrentBackBufferView() const;
 		D3D12_CPU_DESCRIPTOR_HANDLE DepthStencilView() const;
 
@@ -32,7 +34,14 @@ namespace KRender
 		{
 			m4xMsaaState = state;
 		}
-
+		inline void SetViewportWidth(uint32_t width)
+		{
+			mViewportWidth = width;
+		}
+		inline void SetViewportHeight(uint32_t height)
+		{
+			mViewportWidth = height;
+		}
 	private:
 		// API members
 		ComPtr<ID3D12Device> mDevice;
@@ -43,6 +52,7 @@ namespace KRender
 		ComPtr<ID3D12GraphicsCommandList> mCommandList;
 		ComPtr<IDXGISwapChain> mSwapChain;
 		std::vector<ComPtr<ID3D12Resource>> mSwapChainBuffers;
+		std::vector<tagRECT> mScissorRects;
 		ComPtr<ID3D12Resource> mDepthStencilBuffer;
 		ComPtr<ID3D12DescriptorHeap> mRtvHeap;
 		ComPtr<ID3D12DescriptorHeap> mDsvHeap;
@@ -50,6 +60,8 @@ namespace KRender
 		uint32_t mDsvDescriptorSize;
 		uint32_t mCbvDescriptorSize;
 		uint32_t m4xMsaaQualityLevel;
+		uint32_t mViewportWidth;
+		uint32_t mViewportHeight;
 		bool m4xMsaaState;
 
 		//Helper members

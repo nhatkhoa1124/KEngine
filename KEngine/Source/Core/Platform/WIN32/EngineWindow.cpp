@@ -64,12 +64,12 @@ namespace Win32
 		}
 
 		ShowWindow(mHWnd, SW_SHOW);
-		UpdateWindow(mHWnd);
+		::UpdateWindow(mHWnd);
 	}
 
-	void EngineWindow::UpdateWindow(HWND hWnd)
+	void EngineWindow::RenderWindow()
 	{
-		::UpdateWindow(hWnd);
+
 	}
 
 	LRESULT CALLBACK EngineWindow::WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)

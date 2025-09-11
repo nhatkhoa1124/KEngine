@@ -13,6 +13,7 @@ namespace KRender
 		m4xMsaaState{ false }
 	{
 		mSwapChainBuffers.resize(mSwapChainBufferCount);
+		mScissorRects.resize(1);
 	}
 
 	Renderer::~Renderer()
@@ -57,8 +58,8 @@ namespace KRender
 	void Renderer::CreateSwapChain()
 	{
 		DXGI_SWAP_CHAIN_DESC scDesc;
-		scDesc.BufferDesc.Width = WINDOW_WIDTH;
-		scDesc.BufferDesc.Height = WINDOW_HEIGHT;
+		scDesc.BufferDesc.Width = CLIENT_WIDTH;
+		scDesc.BufferDesc.Height = CLIENT_HEIGHT;
 		scDesc.BufferDesc.Format = mBackBufferFormat;
 		scDesc.BufferDesc.RefreshRate.Numerator = 72;
 		scDesc.BufferDesc.RefreshRate.Denominator = 1;
@@ -119,6 +120,24 @@ namespace KRender
 		assert(m4xMsaaQualityLevel > 0);
 	}
 
+	void Renderer::SetViewport()
+	{
+		D3D12_VIEWPORT vp;
+		vp.TopLeftX = 0.0f;
+		vp.TopLeftY = 0.0f;
+		vp.Width = static_cast<float>(CLIENT_WIDTH);
+		vp.Height = static_cast<float>(CLIENT_HEIGHT);
+		vp.MinDepth = 0.0f;
+		vp.MaxDepth = 1.0f;
+		mCommandList->RSSetViewports(1, &vp);
+	}
+
+	void Renderer::SetScissorRectangle()
+	{
+		mScissorRects[0] = { 0, 0, CLIENT_WIDTH / 2, CLIENT_HEIGHT / 2 };
+		mCommandList->RSSetScissorRects(1, &mScissorRects[0]);
+	}
+
 	D3D12_CPU_DESCRIPTOR_HANDLE Renderer::CurrentBackBufferView() const
 	{
 		return CD3DX12_CPU_DESCRIPTOR_HANDLE
@@ -152,8 +171,8 @@ namespace KRender
 		D3D12_RESOURCE_DESC dsvDesc;
 		dsvDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
 		dsvDesc.Alignment = 0;
-		dsvDesc.Width = WINDOW_WIDTH;
-		dsvDesc.Height = WINDOW_HEIGHT;
+		dsvDesc.Width = CLIENT_WIDTH;
+		dsvDesc.Height = CLIENT_HEIGHT;
 		dsvDesc.DepthOrArraySize = 1;
 		dsvDesc.MipLevels = 1;
 		dsvDesc.Format = mDepthStencilFormat;

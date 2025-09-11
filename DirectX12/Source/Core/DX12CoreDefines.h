@@ -6,5 +6,5 @@
 #define KRENDER_API __declspec(dllimport)
 #endif
 
-#define WINDOW_WIDTH 1280
-#define WINDOW_HEIGHT 720
+#define CLIENT_WIDTH 1280
+#define CLIENT_HEIGHT 720
