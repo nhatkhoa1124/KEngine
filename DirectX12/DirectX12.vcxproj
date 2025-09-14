@@ -153,11 +153,6 @@
     <ClCompile Include="Source\dx12pch.cpp" />
     <ClCompile Include="Source\Renderer.cpp" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\KEngine\KEngine.vcxproj">
-      <Project>{6477e022-396d-480a-bb6d-efcd41a04dbf}</Project>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

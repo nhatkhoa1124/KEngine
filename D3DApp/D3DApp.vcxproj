@@ -112,7 +112,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(SolutionDir)\KEngine\Source;$(ProjectDir)/Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)External;$(SolutionDir)DirectX12\Source;$(SolutionDir)KEngine\Source;$(ProjectDir)Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Create</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
@@ -123,7 +123,8 @@
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PreBuildEvent>
-      <Command>copy $(SolutionDir)\Build\KEngine\$(Configuration)\KEngine.dll $(OutDir)</Command>
+      <Command>copy $(SolutionDir)\Build\KEngine\$(Configuration)\KEngine.dll $(OutDir)
+copy $(SolutionDir)\Build\DirectX12\$(Configuration)\DirectX12.dll $(OutDir)</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -136,7 +137,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(SolutionDir)\KEngine\Source;$(ProjectDir)/Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)External;$(SolutionDir)DirectX12\Source;$(SolutionDir)KEngine\Source;$(ProjectDir)Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Create</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
@@ -147,7 +148,8 @@
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PreBuildEvent>
-      <Command>copy $(SolutionDir)\Build\KEngine\$(Configuration)\KEngine.dll $(OutDir)</Command>
+      <Command>copy $(SolutionDir)\Build\KEngine\$(Configuration)\KEngine.dll $(OutDir)
+copy $(SolutionDir)\Build\DirectX12\$(Configuration)\DirectX12.dll $(OutDir)</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -166,6 +168,9 @@
     <Image Include="Assets\dx12.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DirectX12\DirectX12.vcxproj">
+      <Project>{a854a9fa-6482-4b5a-b07f-465727217131}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\KEngine\KEngine.vcxproj">
       <Project>{6477e022-396d-480a-bb6d-efcd41a04dbf}</Project>
     </ProjectReference>

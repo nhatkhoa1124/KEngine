@@ -114,7 +114,7 @@
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <PrecompiledHeader>Create</PrecompiledHeader>
       <PrecompiledHeaderFile>KEngine.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir)/Source/Common;$(ProjectDir)/Source/Core;$(ProjectDir)/Source/Platform/WIN32$(ProjectDir);$(ProjectDir)/Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)External;$(SolutionDir)DirectX12/Source;$(ProjectDir)Source/Common;$(ProjectDir)Source/Core;$(ProjectDir)Source/Platform/WIN32$(ProjectDir);$(ProjectDir)Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
@@ -131,7 +131,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Create</PrecompiledHeader>
       <PrecompiledHeaderFile>KEngine.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir)/Source/Common;$(ProjectDir)/Source/Core;$(ProjectDir)/Source/Platform/WIN32$(ProjectDir);$(ProjectDir)/Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)External;$(SolutionDir)DirectX12/Source;$(ProjectDir)Source/Common;$(ProjectDir)Source/Core;$(ProjectDir)Source/Platform/WIN32$(ProjectDir);$(ProjectDir)Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
@@ -165,6 +165,11 @@
     <ClCompile Include="Source\Engine\CoreEngine.cpp" />
     <ClCompile Include="Source\Engine\Simulation.cpp" />
     <ClCompile Include="Source\KEngine.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DirectX12\DirectX12.vcxproj">
+      <Project>{a854a9fa-6482-4b5a-b07f-465727217131}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

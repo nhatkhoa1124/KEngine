@@ -12,11 +12,12 @@ namespace Win32
 		void InitializeWindow(const std::wstring& title, const std::wstring& className, UINT width, UINT height);
 		void RenderWindow();
 		inline HWND GetHandle() const { return mHWnd; }
+		void SetFrameStatsText(float fps, float mspf) const;
 	private:
 		static LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 		LRESULT MessageHandler(UINT msg, WPARAM wParam, LPARAM lParam);
 		void RegisterWindowClass() const;
-		void OnResize(UINT width, UINT height);
+		void OnResize();
 		void OnKeydown();
 	private:
 		HWND mHWnd;

@@ -11,6 +11,4 @@ public:
 	void Initialize();
 	void Update();
 	void Exit();
-private:
-	Win32::EngineWindow mAppWindow;
 };

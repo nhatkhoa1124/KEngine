@@ -5,3 +5,4 @@
 #endif
 
 #include "Core/Core.h"
+#include "dx12pch.h"

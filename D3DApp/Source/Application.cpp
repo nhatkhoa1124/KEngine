@@ -4,8 +4,7 @@
 
 ENTRYAPP(Application)
 
-Application::Application() :
-	mAppWindow{}
+Application::Application()
 {
 
 }
@@ -25,13 +24,11 @@ void Application::SetupPerGameSettings()
 
 void Application::Initialize()
 {
-	PerGameSettings& settings = PerGameSettings::GetInstance();
-	mAppWindow.InitializeWindow(settings.GetGameName(), settings.GetShortName(), 1280, 720);
 }
 
 void Application::Update()
 {
-	mAppWindow.RenderWindow();
+
 }
 
 void Application::Exit()

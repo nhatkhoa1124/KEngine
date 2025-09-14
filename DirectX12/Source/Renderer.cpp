@@ -1,5 +1,6 @@
 #include "dx12pch.h"
 #include <cassert>
+#include <DirectXColors.h>
 
 namespace KRender
 {
@@ -10,14 +11,64 @@ namespace KRender
 		m4xMsaaQualityLevel{ 0 },
 		mWinHandle{ handle },
 		mIsWindowed{ true },
-		m4xMsaaState{ false }
+		m4xMsaaState{ false },
+		mViewportHeight{ 0 },
+		mViewportWidth{ 0 }
 	{
 		mSwapChainBuffers.resize(mSwapChainBufferCount);
-		mScissorRects.resize(1);
+		mScissorRects.resize(mScissorsCount);
+		mScreenViewports.resize(mViewportsCount);
 	}
 
 	Renderer::~Renderer()
 	{
+
+	}
+
+
+	void Renderer::Draw()
+	{
+		ThrowIfFailed(mCommandAllocator->Reset());
+		ThrowIfFailed(mCommandList->Reset(mCommandAllocator.Get(), nullptr));
+		D3D12_RESOURCE_BARRIER presentToTargetBarrier = CD3DX12_RESOURCE_BARRIER::Transition
+		(
+			CurrentBackBuffer(),
+			D3D12_RESOURCE_STATE_PRESENT,
+			D3D12_RESOURCE_STATE_RENDER_TARGET
+		);
+		mCommandList->ResourceBarrier(1, &presentToTargetBarrier);
+
+		SetViewport();
+		SetScissorRectangle();
+
+		mCommandList->ClearRenderTargetView(CurrentBackBufferView(), DirectX::Colors::LightSteelBlue, 0, nullptr);
+		mCommandList->ClearDepthStencilView
+		(
+			DepthStencilView(),
+			D3D12_CLEAR_FLAG_DEPTH | D3D12_CLEAR_FLAG_STENCIL,
+			1.0f,
+			0,
+			0,
+			nullptr
+		);
+		D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = CurrentBackBufferView();
+		D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle = DepthStencilView();
+		mCommandList->OMSetRenderTargets(1, &rtvHandle, true, &dsvHandle);
+		D3D12_RESOURCE_BARRIER TargetToPresentBarrier = CD3DX12_RESOURCE_BARRIER::Transition
+		(
+			CurrentBackBuffer(),
+			D3D12_RESOURCE_STATE_RENDER_TARGET,
+			D3D12_RESOURCE_STATE_PRESENT
+		);
+		mCommandList->ResourceBarrier(1, &TargetToPresentBarrier);
+		ThrowIfFailed(mCommandList->Close());
+
+		ID3D12CommandList* commandLists[] = { mCommandList.Get() };
+		mCommandQueue->ExecuteCommandLists(_countof(commandLists), commandLists);
+		ThrowIfFailed(mSwapChain->Present(0, 0));
+		mCurrBackBuffer = (mCurrBackBuffer + 1) % mSwapChainBufferCount;
+
+		FlushCommandQueue();
 	}
 
 	void Renderer::CreateDevice()
@@ -122,18 +173,19 @@ namespace KRender
 
 	void Renderer::SetViewport()
 	{
-		D3D12_VIEWPORT vp;
-		vp.TopLeftX = 0.0f;
-		vp.TopLeftY = 0.0f;
-		vp.Width = static_cast<float>(CLIENT_WIDTH);
-		vp.Height = static_cast<float>(CLIENT_HEIGHT);
-		vp.MinDepth = 0.0f;
-		vp.MaxDepth = 1.0f;
-		mCommandList->RSSetViewports(1, &vp);
+		// !!! HARD-CODED FOR ONE VIEWPORT SYSTEMS !!!
+		mScreenViewports[0].TopLeftX = 0.0f;
+		mScreenViewports[0].TopLeftY = 0.0f;
+		mScreenViewports[0].Width = static_cast<float>(CLIENT_WIDTH);
+		mScreenViewports[0].Height = static_cast<float>(CLIENT_HEIGHT);
+		mScreenViewports[0].MinDepth = 0.0f;
+		mScreenViewports[0].MaxDepth = 1.0f;
+		mCommandList->RSSetViewports(1, &mScreenViewports[0]);
 	}
 
 	void Renderer::SetScissorRectangle()
 	{
+		// !!! HARD-CODED FOR ONE SCISSOR RECTANGLE SYSTEMS !!!
 		mScissorRects[0] = { 0, 0, CLIENT_WIDTH / 2, CLIENT_HEIGHT / 2 };
 		mCommandList->RSSetScissorRects(1, &mScissorRects[0]);
 	}
@@ -200,16 +252,13 @@ namespace KRender
 		);
 
 		mDevice->CreateDepthStencilView(mDepthStencilBuffer.Get(), nullptr, DepthStencilView());
-		mCommandList->ResourceBarrier
+		D3D12_RESOURCE_BARRIER resourceBarrier = CD3DX12_RESOURCE_BARRIER::Transition
 		(
-			1,
-			&CD3DX12_RESOURCE_BARRIER::Transition
-			(
-				mDepthStencilBuffer.Get(),
-				D3D12_RESOURCE_STATE_COMMON,
-				D3D12_RESOURCE_STATE_DEPTH_WRITE
-			)
+			CurrentBackBuffer(),
+			D3D12_RESOURCE_STATE_COMMON,
+			D3D12_RESOURCE_STATE_DEPTH_WRITE
 		);
+		mCommandList->ResourceBarrier(1, &resourceBarrier);
 
 	}
 
@@ -221,6 +270,11 @@ namespace KRender
 			ThrowIfFailed(D3D12GetDebugInterface(IID_PPV_ARGS(&debugController)));
 			debugController->EnableDebugLayer();
 		}
+	}
+
+	void Renderer::FlushCommandQueue()
+	{
+
 	}
 
 }

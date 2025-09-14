@@ -8,10 +8,22 @@ INT CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 {
 	auto EntryApp = EntryApplication();
 
-	PerGameSettings& gameSettings = PerGameSettings::GetInstance();
+	PerGameSettings& settings = PerGameSettings::GetInstance();
+	Win32::EngineWindow window = {};
+	window.InitializeWindow(settings.GetGameName(), settings.GetShortName(), 1280, 720);
+
+	KTime::GameTimer& timer = KTime::GameTimer::GetInstance();
+	timer.SetFpsUpdateCallback
+	(
+		[&window](float fps, float mspf)
+		{
+			window.SetFrameStatsText(fps, mspf);
+		}
+	);
 	EntryApp->SetupPerGameSettings();
-	Logger& logger = Logger::GetInstance();
 	EntryApp->Initialize();
+	timer.Reset();
+
 	MSG msg = {};
 	while (msg.message != WM_QUIT)
 	{
@@ -22,6 +34,9 @@ INT CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 		}
 		else
 		{
+			timer.Tick();
+			timer.CalculateFrameStats();
+			window.RenderWindow();
 			EntryApp->Update();
 		}
 	}

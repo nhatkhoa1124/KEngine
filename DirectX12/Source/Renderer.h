@@ -10,6 +10,8 @@ namespace KRender
 	public:
 		Renderer(HWND handle);
 		~Renderer();
+		void Draw();
+	private:
 		void CreateDevice();
 		void CreateFence();
 		void CreateCommandObjects();
@@ -24,8 +26,8 @@ namespace KRender
 		void SetScissorRectangle();
 		D3D12_CPU_DESCRIPTOR_HANDLE CurrentBackBufferView() const;
 		D3D12_CPU_DESCRIPTOR_HANDLE DepthStencilView() const;
-
 		void EnableDebugLayer() const;
+		void FlushCommandQueue();
 		inline void SetWindowed(bool isWindowed)
 		{
 			mIsWindowed = isWindowed;
@@ -42,8 +44,12 @@ namespace KRender
 		{
 			mViewportWidth = height;
 		}
+		inline ID3D12Resource* CurrentBackBuffer() const
+		{
+			return mSwapChainBuffers[mCurrBackBuffer].Get();
+		}
 	private:
-		// API members
+		// Framework members
 		ComPtr<ID3D12Device> mDevice;
 		ComPtr<IDXGIFactory6> mDxgiFactory;
 		ComPtr<ID3D12Fence> mFence;
@@ -53,6 +59,7 @@ namespace KRender
 		ComPtr<IDXGISwapChain> mSwapChain;
 		std::vector<ComPtr<ID3D12Resource>> mSwapChainBuffers;
 		std::vector<tagRECT> mScissorRects;
+		std::vector<D3D12_VIEWPORT> mScreenViewports;
 		ComPtr<ID3D12Resource> mDepthStencilBuffer;
 		ComPtr<ID3D12DescriptorHeap> mRtvHeap;
 		ComPtr<ID3D12DescriptorHeap> mDsvHeap;
@@ -72,8 +79,9 @@ namespace KRender
 		static constexpr DXGI_FORMAT mBackBufferFormat = DXGI_FORMAT_R8G8B8A8_UNORM;
 		static constexpr DXGI_FORMAT mDepthStencilFormat = DXGI_FORMAT_R8G8B8A8_UNORM;
 		static constexpr uint32_t mSwapChainBufferCount = 2; //Double-buffering
-		const uint32_t mCurrBackBuffer = 0;
-
+		static constexpr uint32_t mViewportsCount = 1;
+		static constexpr uint32_t mScissorsCount = 1;
+		uint32_t mCurrBackBuffer = 0;
 	private:
 		// Macros
 #ifdef _DEBUG

@@ -69,7 +69,8 @@ namespace Win32
 
 	void EngineWindow::RenderWindow()
 	{
-
+		KRender::Renderer renderer = { mHWnd };
+		renderer.Draw();
 	}
 
 	LRESULT CALLBACK EngineWindow::WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
@@ -99,25 +100,32 @@ namespace Win32
 	{
 		switch (msg)
 		{
+		case WM_ACTIVATE:
+			if (LOWORD(wParam) != WA_INACTIVE)
+			{
+				KTime::GameTimer::GetInstance().Start();
+			}
+			else
+			{
+				KTime::GameTimer::GetInstance().Stop();
+			}
+			return 0;
 		case WM_DESTROY:
 			PostQuitMessage(0);
 			return 0;
-		case WM_SIZE:
-		{
-			UINT width = LOWORD(lParam);
-			UINT height = HIWORD(lParam);
-			OnResize(width, height);
+		case WM_ENTERSIZEMOVE:
+			KTime::GameTimer::GetInstance().Stop();
 			return 0;
-		}
-		case WM_KEYDOWN:
-			OnKeydown();
-			break;
-		case WM_PAINT:
-			break;
-		case WM_MOUSEMOVE:
-			break;
-		case WM_LBUTTONDOWN:
-			break;
+		case WM_EXITSIZEMOVE:
+			KTime::GameTimer::GetInstance().Start();
+			OnResize();
+			return 0;
+		case WM_MENUCHAR:
+			return MAKELRESULT(0, MNC_CLOSE);
+		case WM_GETMINMAXINFO:
+			((MINMAXINFO*)lParam)->ptMinTrackSize.x = 200;
+			((MINMAXINFO*)lParam)->ptMinTrackSize.y = 200;
+			return 0;
 		default:
 			break;
 		}
@@ -139,20 +147,33 @@ namespace Win32
 		RegisterClassEx(&wc);
 	}
 
-	void EngineWindow::OnResize(UINT width, UINT height)
+	void EngineWindow::OnResize()
 	{
+		RECT rect;
+		GetClientRect(mHWnd, &rect);
+		UINT width = rect.right - rect.left;
+		UINT height = rect.bottom - rect.top;
+
 		if (width == 0 || height == 0)
 		{
+			// Add code for minimization handle
 			return;
 		}
-		UINT adjustedWidth = width;
-		UINT adjustedHeight = height;
-		//djustWindowRectEx();
+
+		// Handle buffer & screen resize
 	}
 
 	void EngineWindow::OnKeydown()
 	{
 
+	}
+
+	void EngineWindow::SetFrameStatsText(float fps, float mspf) const
+	{
+		std::wstring fpsStr = std::to_wstring(static_cast<int>(fps));
+		std::wstring mspfStr = std::to_wstring(mspf);
+		std::wstring windowText = L" FPS: " + fpsStr + L" - " + L" MSPF: " + mspfStr;
+		SetWindowText(mHWnd, windowText.c_str());
 	}
 
 }
