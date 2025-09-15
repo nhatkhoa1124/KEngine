@@ -25,6 +25,36 @@ namespace KRender
 
 	}
 
+	void Renderer::Initialize()
+	{
+		// 1. Factory Creation
+		CreateFactory();
+		// 2. Enable debug layer
+		EnableDebugLayer();
+		// 3. Device Creation (requires factory)
+		CreateDevice();
+		// 4. Check MSAA Support (requires device)
+		CheckMSAASupport4X();
+		// 5. Fence Creation (requires device)
+		CreateFence();
+		// 6. Command Objects (requires device)
+		CreateCommandObjects();
+		// 7. Descriptor Sizes (requires device)
+		SetupDescriptorSize();
+		// 8. Swap Chain Creation (requires command queue and factory)
+		CreateSwapChain();
+		// 9. Descriptor Heaps (requires device)
+		CreateRtvAndDsvHeap();
+		// 10. Render Target Views (requires swap chain and heaps)
+		CreateRenderTargetView();
+		// 11. Depth Stencil Buffer & View (requires device and heaps)
+		CreateDepthStencilBufferAndView();
+		// 12. Viewport and Scissor Setup
+		SetViewport();
+		SetScissorRectangle();
+		// 13. Flush command queue to ensure everything is ready
+		FlushCommandQueue();
+	}
 
 	void Renderer::Draw()
 	{
@@ -71,6 +101,11 @@ namespace KRender
 		FlushCommandQueue();
 	}
 
+	void Renderer::Exit()
+	{
+
+	}
+
 	void Renderer::CreateDevice()
 	{
 		HRESULT hr = D3D12CreateDevice(nullptr, D3D_FEATURE_LEVEL_11_0, IID_PPV_ARGS(&mDevice));
@@ -91,11 +126,11 @@ namespace KRender
 
 	void Renderer::CreateCommandObjects()
 	{
-		D3D12_COMMAND_QUEUE_DESC queueDesc;
+		D3D12_COMMAND_QUEUE_DESC queueDesc = {};
 		queueDesc.Type = D3D12_COMMAND_LIST_TYPE_DIRECT;
 		queueDesc.Flags = D3D12_COMMAND_QUEUE_FLAG_NONE;
 		ThrowIfFailed(mDevice->CreateCommandQueue(&queueDesc, IID_PPV_ARGS(&mCommandQueue)));
-		ThrowIfFailed(mDevice->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&mCommandAllocator)));
+		ThrowIfFailed(mDevice->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(mCommandAllocator.GetAddressOf())));
 		ThrowIfFailed(mDevice->CreateCommandList(
 			0,
 			D3D12_COMMAND_LIST_TYPE_DIRECT,
@@ -108,7 +143,7 @@ namespace KRender
 
 	void Renderer::CreateSwapChain()
 	{
-		DXGI_SWAP_CHAIN_DESC scDesc;
+		DXGI_SWAP_CHAIN_DESC scDesc = {};
 		scDesc.BufferDesc.Width = CLIENT_WIDTH;
 		scDesc.BufferDesc.Height = CLIENT_HEIGHT;
 		scDesc.BufferDesc.Format = mBackBufferFormat;
@@ -125,7 +160,7 @@ namespace KRender
 		scDesc.Windowed = mIsWindowed;
 		scDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
 		scDesc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
-		ThrowIfFailed(mDxgiFactory->CreateSwapChain(mDevice.Get(), &scDesc, mSwapChain.GetAddressOf()));
+		ThrowIfFailed(mDxgiFactory->CreateSwapChain(mCommandQueue.Get(), &scDesc, mSwapChain.GetAddressOf()));
 
 	}
 
@@ -143,14 +178,14 @@ namespace KRender
 
 	void Renderer::CreateRtvAndDsvHeap()
 	{
-		D3D12_DESCRIPTOR_HEAP_DESC rtvDesc;
+		D3D12_DESCRIPTOR_HEAP_DESC rtvDesc = {};
 		rtvDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
 		rtvDesc.NumDescriptors = mSwapChainBufferCount;
 		rtvDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
 		rtvDesc.NodeMask = 0;
 		ThrowIfFailed(mDevice->CreateDescriptorHeap(&rtvDesc, IID_PPV_ARGS(mRtvHeap.GetAddressOf())));
 
-		D3D12_DESCRIPTOR_HEAP_DESC dsvDesc;
+		D3D12_DESCRIPTOR_HEAP_DESC dsvDesc = {};
 		dsvDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_DSV;
 		dsvDesc.NumDescriptors = 1;
 		dsvDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
@@ -160,7 +195,7 @@ namespace KRender
 
 	void Renderer::CheckMSAASupport4X()
 	{
-		D3D12_FEATURE_DATA_MULTISAMPLE_QUALITY_LEVELS msQualityLevel;
+		D3D12_FEATURE_DATA_MULTISAMPLE_QUALITY_LEVELS msQualityLevel = {};
 		msQualityLevel.Format = mBackBufferFormat;
 		msQualityLevel.SampleCount = 4;
 		msQualityLevel.Flags = D3D12_MULTISAMPLE_QUALITY_LEVELS_FLAG_NONE;
@@ -254,7 +289,7 @@ namespace KRender
 		mDevice->CreateDepthStencilView(mDepthStencilBuffer.Get(), nullptr, DepthStencilView());
 		D3D12_RESOURCE_BARRIER resourceBarrier = CD3DX12_RESOURCE_BARRIER::Transition
 		(
-			CurrentBackBuffer(),
+			mDepthStencilBuffer.Get(),
 			D3D12_RESOURCE_STATE_COMMON,
 			D3D12_RESOURCE_STATE_DEPTH_WRITE
 		);
@@ -274,7 +309,20 @@ namespace KRender
 
 	void Renderer::FlushCommandQueue()
 	{
+		// Advance the fence value to mark commands up to this fence point.
+		mCurrFenceValue++;
 
+		// Signal the fence.
+		ThrowIfFailed(mCommandQueue->Signal(mFence.Get(), mCurrFenceValue));
+
+		// Wait until the GPU has completed commands up to this fence point.
+		if (mFence->GetCompletedValue() < mCurrFenceValue)
+		{
+			HANDLE eventHandle = CreateEventEx(nullptr, nullptr, false, EVENT_ALL_ACCESS);
+			ThrowIfFailed(mFence->SetEventOnCompletion(mCurrFenceValue, eventHandle));
+			WaitForSingleObject(eventHandle, INFINITE);
+			CloseHandle(eventHandle);
+		}
 	}
 
 }

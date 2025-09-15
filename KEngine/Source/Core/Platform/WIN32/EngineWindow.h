@@ -11,6 +11,7 @@ namespace Win32
 		~EngineWindow();
 		void InitializeWindow(const std::wstring& title, const std::wstring& className, UINT width, UINT height);
 		void RenderWindow();
+		void CloseWindow() const;
 		inline HWND GetHandle() const { return mHWnd; }
 		void SetFrameStatsText(float fps, float mspf) const;
 	private:

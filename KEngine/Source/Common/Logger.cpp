@@ -89,3 +89,4 @@ std::wstring Logger::LogFile()
 }
 
 
+

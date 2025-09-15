@@ -3,6 +3,7 @@
 #include <string>
 #include <mutex>
 #include <atomic>
+#include <exception>
 
 class KENGINE_API Logger
 {

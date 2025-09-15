@@ -10,7 +10,9 @@ namespace KRender
 	public:
 		Renderer(HWND handle);
 		~Renderer();
+		void Initialize();
 		void Draw();
+		void Exit();
 	private:
 		void CreateDevice();
 		void CreateFence();
@@ -42,7 +44,7 @@ namespace KRender
 		}
 		inline void SetViewportHeight(uint32_t height)
 		{
-			mViewportWidth = height;
+			mViewportHeight = height;
 		}
 		inline ID3D12Resource* CurrentBackBuffer() const
 		{
@@ -77,11 +79,12 @@ namespace KRender
 
 		// Hard-coded values
 		static constexpr DXGI_FORMAT mBackBufferFormat = DXGI_FORMAT_R8G8B8A8_UNORM;
-		static constexpr DXGI_FORMAT mDepthStencilFormat = DXGI_FORMAT_R8G8B8A8_UNORM;
+		static constexpr DXGI_FORMAT mDepthStencilFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;;
 		static constexpr uint32_t mSwapChainBufferCount = 2; //Double-buffering
 		static constexpr uint32_t mViewportsCount = 1;
 		static constexpr uint32_t mScissorsCount = 1;
 		uint32_t mCurrBackBuffer = 0;
+		uint64_t mCurrFenceValue = 0;
 	private:
 		// Macros
 #ifdef _DEBUG

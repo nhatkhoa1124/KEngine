@@ -2,7 +2,9 @@
 #include "Application.h"
 #include "Core/Platform/WIN32/WinEntry.h"
 
-ENTRYAPP(Application)
+Win32::IApplication* EntryApplication() {
+	return new Application();
+}
 
 Application::Application()
 {

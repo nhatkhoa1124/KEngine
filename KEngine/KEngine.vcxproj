@@ -142,6 +142,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Source\Common\CmdLineArgs.h" />
+    <ClInclude Include="Source\Common\KException.h" />
     <ClInclude Include="Source\Common\Logger.h" />
     <ClInclude Include="Source\Common\KTime.h" />
     <ClInclude Include="Source\Core\Core.h" />
@@ -151,7 +152,7 @@
     <ClInclude Include="Source\Core\Platform\WIN32\IApplication.h" />
     <ClInclude Include="Source\Core\Platform\WIN32\EngineWindow.h" />
     <ClInclude Include="Source\Core\Platform\WIN32\WinEntry.h" />
-    <ClInclude Include="Source\Engine\CoreEngine.h" />
+    <ClInclude Include="Source\Engine\Engine.h" />
     <ClInclude Include="Source\Engine\Simulation.h" />
     <ClInclude Include="Source\KEngine.h" />
   </ItemGroup>
@@ -162,7 +163,7 @@
     <ClCompile Include="Source\Core\Core.cpp" />
     <ClCompile Include="Source\Core\PerGameSettings.cpp" />
     <ClCompile Include="Source\Core\Platform\WIN32\EngineWindow.cpp" />
-    <ClCompile Include="Source\Engine\CoreEngine.cpp" />
+    <ClCompile Include="Source\Engine\Engine.cpp" />
     <ClCompile Include="Source\Engine\Simulation.cpp" />
     <ClCompile Include="Source\KEngine.cpp" />
   </ItemGroup>

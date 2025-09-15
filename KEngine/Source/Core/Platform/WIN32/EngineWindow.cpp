@@ -69,8 +69,11 @@ namespace Win32
 
 	void EngineWindow::RenderWindow()
 	{
-		KRender::Renderer renderer = { mHWnd };
-		renderer.Draw();
+	}
+
+	void EngineWindow::CloseWindow() const
+	{
+		PostMessage(mHWnd, WM_CLOSE, 0, 0);
 	}
 
 	LRESULT CALLBACK EngineWindow::WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
