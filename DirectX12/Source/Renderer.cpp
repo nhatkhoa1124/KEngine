@@ -4,7 +4,7 @@
 
 namespace KRender
 {
-	Renderer::Renderer(HWND handle) :
+	DX12Renderer::DX12Renderer(HWND handle) :
 		mRtvDescriptorSize{ 0 },
 		mDsvDescriptorSize{ 0 },
 		mCbvDescriptorSize{ 0 },
@@ -20,12 +20,12 @@ namespace KRender
 		mScreenViewports.resize(mViewportsCount);
 	}
 
-	Renderer::~Renderer()
+	DX12Renderer::~DX12Renderer()
 	{
 
 	}
 
-	void Renderer::Initialize()
+	void DX12Renderer::Initialize()
 	{
 		// 1. Factory Creation
 		CreateFactory();
@@ -56,7 +56,7 @@ namespace KRender
 		FlushCommandQueue();
 	}
 
-	void Renderer::Draw()
+	void DX12Renderer::Draw()
 	{
 		ThrowIfFailed(mCommandAllocator->Reset());
 		ThrowIfFailed(mCommandList->Reset(mCommandAllocator.Get(), nullptr));
@@ -101,12 +101,12 @@ namespace KRender
 		FlushCommandQueue();
 	}
 
-	void Renderer::Exit()
+	void DX12Renderer::Exit()
 	{
 
 	}
 
-	void Renderer::CreateDevice()
+	void DX12Renderer::CreateDevice()
 	{
 		HRESULT hr = D3D12CreateDevice(nullptr, D3D_FEATURE_LEVEL_11_0, IID_PPV_ARGS(&mDevice));
 
@@ -119,12 +119,12 @@ namespace KRender
 
 	}
 
-	void Renderer::CreateFence()
+	void DX12Renderer::CreateFence()
 	{
 		ThrowIfFailed(mDevice->CreateFence(0, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&mFence)));
 	}
 
-	void Renderer::CreateCommandObjects()
+	void DX12Renderer::CreateCommandObjects()
 	{
 		D3D12_COMMAND_QUEUE_DESC queueDesc = {};
 		queueDesc.Type = D3D12_COMMAND_LIST_TYPE_DIRECT;
@@ -141,7 +141,7 @@ namespace KRender
 		mCommandList->Close();
 	}
 
-	void Renderer::CreateSwapChain()
+	void DX12Renderer::CreateSwapChain()
 	{
 		DXGI_SWAP_CHAIN_DESC scDesc = {};
 		scDesc.BufferDesc.Width = CLIENT_WIDTH;
@@ -164,19 +164,19 @@ namespace KRender
 
 	}
 
-	void Renderer::SetupDescriptorSize()
+	void DX12Renderer::SetupDescriptorSize()
 	{
 		mRtvDescriptorSize = mDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
 		mDsvDescriptorSize = mDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_DSV);
 		mCbvDescriptorSize = mDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 	}
 
-	void Renderer::CreateFactory()
+	void DX12Renderer::CreateFactory()
 	{
 		ThrowIfFailed(CreateDXGIFactory1(IID_PPV_ARGS(&mDxgiFactory)));
 	}
 
-	void Renderer::CreateRtvAndDsvHeap()
+	void DX12Renderer::CreateRtvAndDsvHeap()
 	{
 		D3D12_DESCRIPTOR_HEAP_DESC rtvDesc = {};
 		rtvDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
@@ -193,7 +193,7 @@ namespace KRender
 		ThrowIfFailed(mDevice->CreateDescriptorHeap(&dsvDesc, IID_PPV_ARGS(mDsvHeap.GetAddressOf())));
 	}
 
-	void Renderer::CheckMSAASupport4X()
+	void DX12Renderer::CheckMSAASupport4X()
 	{
 		D3D12_FEATURE_DATA_MULTISAMPLE_QUALITY_LEVELS msQualityLevel = {};
 		msQualityLevel.Format = mBackBufferFormat;
@@ -206,7 +206,7 @@ namespace KRender
 		assert(m4xMsaaQualityLevel > 0);
 	}
 
-	void Renderer::SetViewport()
+	void DX12Renderer::SetViewport()
 	{
 		// !!! HARD-CODED FOR ONE VIEWPORT SYSTEMS !!!
 		mScreenViewports[0].TopLeftX = 0.0f;
@@ -218,14 +218,14 @@ namespace KRender
 		mCommandList->RSSetViewports(1, &mScreenViewports[0]);
 	}
 
-	void Renderer::SetScissorRectangle()
+	void DX12Renderer::SetScissorRectangle()
 	{
 		// !!! HARD-CODED FOR ONE SCISSOR RECTANGLE SYSTEMS !!!
 		mScissorRects[0] = { 0, 0, CLIENT_WIDTH / 2, CLIENT_HEIGHT / 2 };
 		mCommandList->RSSetScissorRects(1, &mScissorRects[0]);
 	}
 
-	D3D12_CPU_DESCRIPTOR_HANDLE Renderer::CurrentBackBufferView() const
+	D3D12_CPU_DESCRIPTOR_HANDLE DX12Renderer::CurrentBackBufferView() const
 	{
 		return CD3DX12_CPU_DESCRIPTOR_HANDLE
 		(
@@ -235,12 +235,12 @@ namespace KRender
 		);
 	}
 
-	D3D12_CPU_DESCRIPTOR_HANDLE Renderer::DepthStencilView() const
+	D3D12_CPU_DESCRIPTOR_HANDLE DX12Renderer::DepthStencilView() const
 	{
 		return mDsvHeap->GetCPUDescriptorHandleForHeapStart();
 	}
 
-	void Renderer::CreateRenderTargetView()
+	void DX12Renderer::CreateRenderTargetView()
 	{
 		CD3DX12_CPU_DESCRIPTOR_HANDLE rtvHeapHandle(mRtvHeap->GetCPUDescriptorHandleForHeapStart());
 		for (uint32_t i = 0; i < mSwapChainBufferCount; i++)
@@ -251,7 +251,7 @@ namespace KRender
 		}
 	}
 
-	void Renderer::CreateDepthStencilBufferAndView()
+	void DX12Renderer::CreateDepthStencilBufferAndView()
 	{
 		auto heapProperty = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
 
@@ -297,7 +297,7 @@ namespace KRender
 
 	}
 
-	void Renderer::EnableDebugLayer() const
+	void DX12Renderer::EnableDebugLayer() const
 	{
 		if (mDebug)
 		{
@@ -307,7 +307,7 @@ namespace KRender
 		}
 	}
 
-	void Renderer::FlushCommandQueue()
+	void DX12Renderer::FlushCommandQueue()
 	{
 		// Advance the fence value to mark commands up to this fence point.
 		mCurrFenceValue++;

@@ -1,15 +1,15 @@
 #pragma once
-#include <cstdint>
+
 #include <vector>
 
 namespace KRender
 {
 	using Microsoft::WRL::ComPtr;
-	class KRENDER_API Renderer
+	class KRENDER_API DX12Renderer : public IRenderer
 	{
 	public:
-		Renderer(HWND handle);
-		~Renderer();
+		DX12Renderer(HWND handle);
+		~DX12Renderer();
 		void Initialize();
 		void Draw();
 		void Exit();
@@ -65,12 +65,12 @@ namespace KRender
 		ComPtr<ID3D12Resource> mDepthStencilBuffer;
 		ComPtr<ID3D12DescriptorHeap> mRtvHeap;
 		ComPtr<ID3D12DescriptorHeap> mDsvHeap;
-		uint32_t mRtvDescriptorSize;
-		uint32_t mDsvDescriptorSize;
-		uint32_t mCbvDescriptorSize;
-		uint32_t m4xMsaaQualityLevel;
-		uint32_t mViewportWidth;
-		uint32_t mViewportHeight;
+		UINT32 mRtvDescriptorSize;
+		UINT32 mDsvDescriptorSize;
+		UINT32 mCbvDescriptorSize;
+		UINT32 m4xMsaaQualityLevel;
+		UINT32 mViewportWidth;
+		UINT32 mViewportHeight;
 		bool m4xMsaaState;
 
 		//Helper members
@@ -80,11 +80,11 @@ namespace KRender
 		// Hard-coded values
 		static constexpr DXGI_FORMAT mBackBufferFormat = DXGI_FORMAT_R8G8B8A8_UNORM;
 		static constexpr DXGI_FORMAT mDepthStencilFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;;
-		static constexpr uint32_t mSwapChainBufferCount = 2; //Double-buffering
-		static constexpr uint32_t mViewportsCount = 1;
-		static constexpr uint32_t mScissorsCount = 1;
-		uint32_t mCurrBackBuffer = 0;
-		uint64_t mCurrFenceValue = 0;
+		static constexpr UINT32 mSwapChainBufferCount = 2; //Double-buffering
+		static constexpr UINT32 mViewportsCount = 1;
+		static constexpr UINT32 mScissorsCount = 1;
+		UINT32 mCurrBackBuffer = 0;
+		UINT64 mCurrFenceValue = 0;
 	private:
 		// Macros
 #ifdef _DEBUG

@@ -3,7 +3,7 @@
 #include <memory>
 #include "Platform/WIN32/IApplication.h"
 
-namespace CoreEngine
+namespace KEngine
 {
 	class KENGINE_API Engine
 	{
@@ -17,7 +17,7 @@ namespace CoreEngine
 		void Render();
 	private:
 		std::unique_ptr<Win32::EngineWindow> mWindow;
-		std::unique_ptr<KRender::Renderer> mRenderer;
+		std::unique_ptr<KRender::DX12Renderer> mRenderer;
 		Win32::IApplication* mApplication = nullptr;
 		bool mIsRunning = false;
 	};

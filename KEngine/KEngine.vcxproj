@@ -148,6 +148,8 @@
     <ClInclude Include="Source\Core\Core.h" />
     <ClInclude Include="Source\Core\CoreDefines.h" />
     <ClInclude Include="Source\Core\CoreMinimal.h" />
+    <ClInclude Include="Source\Core\Graphics\IRenderer.h" />
+    <ClInclude Include="Source\Core\Graphics\Mesh.h" />
     <ClInclude Include="Source\Core\PerGameSettings.h" />
     <ClInclude Include="Source\Core\Platform\WIN32\IApplication.h" />
     <ClInclude Include="Source\Core\Platform\WIN32\EngineWindow.h" />
@@ -161,6 +163,7 @@
     <ClCompile Include="Source\Common\Logger.cpp" />
     <ClCompile Include="Source\Common\KTime.cpp" />
     <ClCompile Include="Source\Core\Core.cpp" />
+    <ClCompile Include="Source\Core\Graphics\Mesh.cpp" />
     <ClCompile Include="Source\Core\PerGameSettings.cpp" />
     <ClCompile Include="Source\Core\Platform\WIN32\EngineWindow.cpp" />
     <ClCompile Include="Source\Engine\Engine.cpp" />

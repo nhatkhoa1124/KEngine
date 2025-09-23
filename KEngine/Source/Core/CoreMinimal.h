@@ -11,4 +11,5 @@
 #include "Common/KTime.h"
 #include "Core/PerGameSettings.h"
 #include "Engine/Engine.h"
+#include "Core/Graphics/IRenderer.h"
 

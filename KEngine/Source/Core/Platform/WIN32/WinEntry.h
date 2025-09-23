@@ -9,7 +9,7 @@ INT CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 {
 	try
 	{
-		CoreEngine::Engine engine{ EntryApplication() };
+		KEngine::Engine engine{ EntryApplication() };
 		if (engine.Initialize())
 		{
 			engine.Run();

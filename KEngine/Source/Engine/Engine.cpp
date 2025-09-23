@@ -3,7 +3,7 @@
 #include <string>
 #include <exception>
 
-namespace CoreEngine
+namespace KEngine
 {
 	KTime::GameTimer& EngineTimer = KTime::GameTimer::GetInstance();
 
@@ -22,7 +22,7 @@ namespace CoreEngine
 			mWindow = std::make_unique<Win32::EngineWindow>();
 			mWindow->InitializeWindow(settings.GetGameName(), settings.GetShortName(), 1280, 720);
 
-			mRenderer = std::make_unique<KRender::Renderer>(mWindow->GetHandle());
+			mRenderer = std::make_unique<KRender::DX12Renderer>(mWindow->GetHandle());
 			mRenderer->Initialize();
 
 			EngineTimer.SetFpsUpdateCallback
