@@ -1,11 +1,16 @@
 #pragma once
 
+#include "Core/Core.h"
 #include <string>
 #include <comdef.h>
 
+#include "d3dx12_include/directx/d3dx12.h"
+#include <wrl/client.h>
+#include <d3d12.h>
+
 namespace KRender
 {
-	class KRENDER_API DxException
+	class DxException
 	{
 	public:
 		DxException() = default;
@@ -100,4 +105,8 @@ namespace KRender
 		return defaultBuffer;
 	}
 
+	inline UINT CalcConstantBufferByteSize(UINT byteSize)
+	{
+		return (byteSize + 255) & ~255;
+	}
 }

@@ -1,6 +1,7 @@
 #include "dx12pch.h"
-#include "Core/Buffer/VertexBuffer.h"
+#include "VertexBuffer.h"
 #include "DirectXColors.h"
+#include "Utils/DX12Helper.h"
 
 namespace KRender
 {

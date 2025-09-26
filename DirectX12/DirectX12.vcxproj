@@ -112,14 +112,14 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(SolutionDir)KEngine\Source;$(SolutionDir)External;$(ProjectDir)Source\Utils;$(ProjectDir)Source\Core;$(ProjectDir)Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Source\Core\Shader;$(ProjectDir)Source\Core\Math;$(ProjectDir)Source\Core\Buffer;$(SolutionDir)KEngine\Source;$(SolutionDir)External;$(ProjectDir)Source\Utils;$(ProjectDir)Source\Core;$(ProjectDir)Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Create</PrecompiledHeader>
       <PrecompiledHeaderFile>dx12pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>d3d12.lib;dxgi.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d12.lib;dxgi.lib;dxguid.lib;d3dcompiler.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -132,32 +132,39 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(SolutionDir)KEngine\Source;$(SolutionDir)External;$(ProjectDir)Source\Utils;$(ProjectDir)Source\Core;$(ProjectDir)Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Source\Core\Shader;$(ProjectDir)Source\Core\Math;$(ProjectDir)Source\Core\Buffer;$(SolutionDir)KEngine\Source;$(SolutionDir)External;$(ProjectDir)Source\Utils;$(ProjectDir)Source\Core;$(ProjectDir)Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Create</PrecompiledHeader>
       <PrecompiledHeaderFile>dx12pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>d3d12.lib;dxgi.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d12.lib;dxgi.lib;dxguid.lib;d3dcompiler.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Core\Buffer\ConstantBuffer.h" />
     <ClInclude Include="Source\Core\Buffer\IndexBuffer.h" />
     <ClInclude Include="Source\Core\Buffer\VertexBuffer.h" />
     <ClInclude Include="Source\Core\DX12CoreDefines.h" />
     <ClInclude Include="Source\Core\DX12Core.h" />
     <ClInclude Include="Source\Core\DX12Mesh.h" />
+    <ClInclude Include="Source\Core\Math\DX12Math.h" />
+    <ClInclude Include="Source\Core\Shader\DX12Shader.h" />
+    <ClInclude Include="Source\Core\Shader\ShaderProgram.h" />
     <ClInclude Include="Source\dx12pch.h" />
-    <ClInclude Include="Source\Renderer.h" />
+    <ClInclude Include="Source\DX12Renderer.h" />
     <ClInclude Include="Source\Utils\DX12Helper.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Core\Buffer\ConstantBuffer.cpp" />
     <ClCompile Include="Source\Core\Buffer\IndexBuffer.cpp" />
     <ClCompile Include="Source\Core\Buffer\VertexBuffer.cpp" />
     <ClCompile Include="Source\Core\DX12Mesh.cpp" />
+    <ClCompile Include="Source\Core\Shader\DX12Shader.cpp" />
+    <ClCompile Include="Source\Core\Shader\ShaderProgram.cpp" />
     <ClCompile Include="Source\dx12pch.cpp" />
-    <ClCompile Include="Source\Renderer.cpp" />
+    <ClCompile Include="Source\DX12Renderer.cpp" />
     <ClCompile Include="Source\Utils\DX12Helper.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

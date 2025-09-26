@@ -1,5 +1,6 @@
 #include "dx12pch.h"
 #include "IndexBuffer.h"
+#include "Utils/DX12Helper.h"
 
 namespace KRender
 {

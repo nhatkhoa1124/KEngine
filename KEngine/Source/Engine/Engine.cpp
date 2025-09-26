@@ -7,14 +7,16 @@ namespace KEngine
 {
 	KTime::GameTimer& EngineTimer = KTime::GameTimer::GetInstance();
 
-	Engine::Engine(Win32::IApplication* EntryApp) :
+	template <typename RendererType>
+	Engine<RendererType>::Engine(Win32::IApplication* EntryApp) :
 		mWindow{ nullptr },
 		mRenderer{ nullptr }
 	{
 		mApplication = EntryApp;
 	}
 
-	bool Engine::Initialize()
+	template<typename RendererType>
+	bool Engine<RendererType>::Initialize()
 	{
 		try
 		{
@@ -22,7 +24,7 @@ namespace KEngine
 			mWindow = std::make_unique<Win32::EngineWindow>();
 			mWindow->InitializeWindow(settings.GetGameName(), settings.GetShortName(), 1280, 720);
 
-			mRenderer = std::make_unique<KRender::DX12Renderer>(mWindow->GetHandle());
+			mRenderer = std::make_unique<RendererType>(mWindow->GetHandle());
 			mRenderer->Initialize();
 
 			EngineTimer.SetFpsUpdateCallback
@@ -46,7 +48,8 @@ namespace KEngine
 		}
 	}
 
-	void Engine::Run()
+	template<typename RendererType>
+	void Engine<RendererType>::Run()
 	{
 		mIsRunning = true;
 		MSG msg = {};
@@ -67,7 +70,8 @@ namespace KEngine
 		}
 	}
 
-	void Engine::Shutdown()
+	template<typename RendererType>
+	void Engine<RendererType>::Shutdown()
 	{
 		if (mApplication)
 		{
@@ -77,9 +81,12 @@ namespace KEngine
 		mWindow->CloseWindow();
 	}
 
-	void Engine::Render()
+	template<typename RendererType>
+	void Engine<RendererType>::Render()
 	{
 		mWindow->RenderWindow();
 		mRenderer->Draw();
 	}
+	// Concrete instantiation
+	template class KENGINE_API Engine<KRender::DX12Renderer>;
 }

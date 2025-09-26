@@ -1,6 +1,12 @@
 #pragma once
 
+#include "d3dx12_include/directx/d3dx12.h"
+#include <wrl/client.h>
+#include <d3d12.h>
+#include <DirectXMath.h>
 #include <vector>
+#include "Core/Graphics/IRenderer.h"
+
 
 namespace KRender
 {

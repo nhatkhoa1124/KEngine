@@ -1,6 +1,12 @@
 #pragma once
 
-#include <vector>
+#include "Core/Core.h"
+#include "Core/Graphics/IRenderer.h"
+
+#include "d3dx12_include/directx/d3dx12.h"
+#include <wrl/client.h>
+#include <d3d12.h>
+#include <dxgi1_6.h>
 
 namespace KRender
 {
@@ -10,9 +16,9 @@ namespace KRender
 	public:
 		DX12Renderer(HWND handle);
 		~DX12Renderer();
-		void Initialize();
-		void Draw();
-		void Exit();
+		void Initialize() override;
+		void Draw() override;
+		void Exit() override;
 	private:
 		void CreateDevice();
 		void CreateFence();
@@ -79,7 +85,7 @@ namespace KRender
 
 		// Hard-coded values
 		static constexpr DXGI_FORMAT mBackBufferFormat = DXGI_FORMAT_R8G8B8A8_UNORM;
-		static constexpr DXGI_FORMAT mDepthStencilFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;;
+		static constexpr DXGI_FORMAT mDepthStencilFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;
 		static constexpr UINT32 mSwapChainBufferCount = 2; //Double-buffering
 		static constexpr UINT32 mViewportsCount = 1;
 		static constexpr UINT32 mScissorsCount = 1;

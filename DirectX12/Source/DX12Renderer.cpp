@@ -1,6 +1,8 @@
 #include "dx12pch.h"
+#include "DX12Renderer.h"
 #include <cassert>
 #include <DirectXColors.h>
+#include "Utils/DX12Helper.h"
 
 namespace KRender
 {
