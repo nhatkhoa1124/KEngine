@@ -10,7 +10,7 @@ struct VertexIn
 };
 struct VertexOut
 {
-    float3 PosH : SV_POSITION;
+    float4 PosH : SV_POSITION;
     float4 Color : Color;
 };
 
@@ -24,7 +24,7 @@ VertexOut VS(VertexIn vin)
     return vout;
 }
 
-float PS(VertexOut pin) : SV_Target
+float4 PS(VertexOut pin) : SV_Target
 {
     return pin.Color;
 }

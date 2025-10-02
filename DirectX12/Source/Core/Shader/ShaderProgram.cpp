@@ -1,6 +1,8 @@
 #include "dx12pch.h"
 #include "ShaderProgram.h"
 #include <d3dcompiler.h>
+#include <fstream>
+#include "Utils/DX12Helper.h"
 
 namespace KRender
 {
@@ -41,5 +43,16 @@ namespace KRender
 			}
 			throw std::exception("Shader compilation failed");
 		}
+	}
+	void ShaderProgram::LoadShaderBinary(const std::wstring& filename)
+	{
+		std::fstream fin(filename, std::ios::binary);
+		fin.seekg(0, std::ios_base::end);
+		std::ifstream::pos_type size = (size_t)(fin.tellg());
+		fin.seekg(0, std::ios_base::beg);
+
+		ThrowIfFailed(D3DCreateBlob(size, mByteCode.GetAddressOf()));
+		fin.read((char*)mByteCode->GetBufferPointer(), size);
+		fin.close();
 	}
 }

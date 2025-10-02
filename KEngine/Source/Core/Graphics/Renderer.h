@@ -21,10 +21,3 @@ public:
 	virtual void Draw() = 0;
 	virtual void Exit() = 0;
 };
-
-class IRendererFactory
-{
-public:
-	virtual ~IRendererFactory() = default;
-	virtual std::unique_ptr<IRenderer> CreateRenderer(HWND handle) = 0;
-};

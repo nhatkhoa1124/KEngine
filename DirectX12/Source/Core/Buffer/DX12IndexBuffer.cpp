@@ -1,17 +1,17 @@
 #include "dx12pch.h"
-#include "IndexBuffer.h"
+#include "DX12IndexBuffer.h"
 #include "Utils/DX12Helper.h"
 
 namespace KRender
 {
-	IndexBuffer::IndexBuffer(ID3D12Device* device, std::vector<UINT32> indices) :
+	DX12IndexBuffer::DX12IndexBuffer(ID3D12Device* device, std::vector<UINT32> indices) :
 		mBufferDevice{ device },
 		mIndices{ indices },
 		mIndexBufferView{}
 	{
 		mByteSize = mIndices.size() * sizeof(UINT32);
 	}
-	void IndexBuffer::InitBuffer(ID3D12GraphicsCommandList* cmdList)
+	void DX12IndexBuffer::InitBuffer(ID3D12GraphicsCommandList* cmdList)
 	{
 		mIndexBufferGPU = CreateDefaultBuffer
 		(
@@ -22,13 +22,13 @@ namespace KRender
 			mIndexBufferUploader
 		);
 	}
-	void IndexBuffer::CreateBufferView()
+	void DX12IndexBuffer::CreateBufferView()
 	{
 		mIndexBufferView.BufferLocation = mIndexBufferGPU->GetGPUVirtualAddress();
 		mIndexBufferView.Format = DXGI_FORMAT_R32_UINT;
 		mIndexBufferView.SizeInBytes = mByteSize;
 	}
-	void IndexBuffer::Bind(ID3D12GraphicsCommandList* cmdList)
+	void DX12IndexBuffer::Bind(ID3D12GraphicsCommandList* cmdList)
 	{
 		cmdList->IASetIndexBuffer(&mIndexBufferView);
 	}

@@ -10,7 +10,7 @@
 
 namespace KRender
 {
-	class DxException
+	class KRENDER_API DxException
 	{
 	public:
 		DxException() = default;

@@ -1,20 +1,20 @@
 #pragma once
 
+#include "DX12Core.h"
+#include "Core/Graphics/Renderer.h"
 #include "d3dx12_include/directx/d3dx12.h"
 #include <wrl/client.h>
 #include <d3d12.h>
-#include <DirectXMath.h>
 #include <vector>
-#include "Core/Graphics/IRenderer.h"
 
 namespace KRender
 {
 	using Microsoft::WRL::ComPtr;
-	class IndexBuffer : public IBuffer
+	class KRENDER_API DX12IndexBuffer : public IBuffer
 	{
 	public:
-		IndexBuffer(ID3D12Device* device, std::vector<UINT32> indices);
-		~IndexBuffer() = default;
+		DX12IndexBuffer(ID3D12Device* device, std::vector<UINT32> indices);
+		~DX12IndexBuffer() = default;
 		void InitBuffer(ID3D12GraphicsCommandList* cmdList);
 		void CreateBufferView() override;
 		void Bind(ID3D12GraphicsCommandList* cmdList);

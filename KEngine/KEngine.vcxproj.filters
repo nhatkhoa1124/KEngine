@@ -60,7 +60,7 @@
     <ClInclude Include="Source\Core\Graphics\Mesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Core\Graphics\IRenderer.h">
+    <ClInclude Include="Source\Core\Graphics\Renderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -2,8 +2,8 @@
 
 #include <memory>
 #include "Platform/WIN32/IApplication.h"
-#include "DX12Renderer.h"
-#include "Core/Graphics/IRenderer.h"
+#include "Core/DX12Renderer.h"
+#include "Core/Graphics/Renderer.h"
 
 namespace KEngine
 {

@@ -148,7 +148,7 @@
     <ClInclude Include="Source\Core\Core.h" />
     <ClInclude Include="Source\Core\CoreDefines.h" />
     <ClInclude Include="Source\Core\CoreMinimal.h" />
-    <ClInclude Include="Source\Core\Graphics\IRenderer.h" />
+    <ClInclude Include="Source\Core\Graphics\Renderer.h" />
     <ClInclude Include="Source\Core\Graphics\Mesh.h" />
     <ClInclude Include="Source\Core\PerGameSettings.h" />
     <ClInclude Include="Source\Core\Platform\WIN32\IApplication.h" />

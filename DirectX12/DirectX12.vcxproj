@@ -112,7 +112,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(ProjectDir)Source\Core\Shader;$(ProjectDir)Source\Core\Math;$(ProjectDir)Source\Core\Buffer;$(SolutionDir)KEngine\Source;$(SolutionDir)External;$(ProjectDir)Source\Utils;$(ProjectDir)Source\Core;$(ProjectDir)Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Source\Core\Memory;$(ProjectDir)Source\Core\Shader;$(ProjectDir)Source\Core\Math;$(ProjectDir)Source\Core\Buffer;$(SolutionDir)KEngine\Source;$(SolutionDir)External;$(ProjectDir)Source\Utils;$(ProjectDir)Source\Core;$(ProjectDir)Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Create</PrecompiledHeader>
       <PrecompiledHeaderFile>dx12pch.h</PrecompiledHeaderFile>
     </ClCompile>
@@ -132,7 +132,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(ProjectDir)Source\Core\Shader;$(ProjectDir)Source\Core\Math;$(ProjectDir)Source\Core\Buffer;$(SolutionDir)KEngine\Source;$(SolutionDir)External;$(ProjectDir)Source\Utils;$(ProjectDir)Source\Core;$(ProjectDir)Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Source\Core\Memory;$(ProjectDir)Source\Core\Shader;$(ProjectDir)Source\Core\Math;$(ProjectDir)Source\Core\Buffer;$(SolutionDir)KEngine\Source;$(SolutionDir)External;$(ProjectDir)Source\Utils;$(ProjectDir)Source\Core;$(ProjectDir)Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Create</PrecompiledHeader>
       <PrecompiledHeaderFile>dx12pch.h</PrecompiledHeaderFile>
     </ClCompile>
@@ -143,28 +143,44 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Core\Buffer\ConstantBuffer.h" />
-    <ClInclude Include="Source\Core\Buffer\IndexBuffer.h" />
-    <ClInclude Include="Source\Core\Buffer\VertexBuffer.h" />
+    <ClInclude Include="Source\Core\Buffer\DX12ConstantBuffer.h" />
+    <ClInclude Include="Source\Core\Buffer\DX12IndexBuffer.h" />
+    <ClInclude Include="Source\Core\Buffer\DX12RenderTarget.h" />
+    <ClInclude Include="Source\Core\Buffer\DX12VertexBuffer.h" />
+    <ClInclude Include="Source\Core\DX12CommandContext.h" />
     <ClInclude Include="Source\Core\DX12CoreDefines.h" />
     <ClInclude Include="Source\Core\DX12Core.h" />
+    <ClInclude Include="Source\Core\DX12Device.h" />
     <ClInclude Include="Source\Core\DX12Mesh.h" />
+    <ClInclude Include="Source\Core\DX12SwapChain.h" />
+    <ClInclude Include="Source\Core\DX12Viewport.h" />
     <ClInclude Include="Source\Core\Math\DX12Math.h" />
+    <ClInclude Include="Source\Core\Memory\DX12DescriptorHeap.h" />
     <ClInclude Include="Source\Core\Shader\DX12Shader.h" />
+    <ClInclude Include="Source\Core\Shader\PixelShader.h" />
     <ClInclude Include="Source\Core\Shader\ShaderProgram.h" />
+    <ClInclude Include="Source\Core\Shader\VertexShader.h" />
     <ClInclude Include="Source\dx12pch.h" />
-    <ClInclude Include="Source\DX12Renderer.h" />
+    <ClInclude Include="Source\Core\DX12Renderer.h" />
     <ClInclude Include="Source\Utils\DX12Helper.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Core\Buffer\ConstantBuffer.cpp" />
-    <ClCompile Include="Source\Core\Buffer\IndexBuffer.cpp" />
-    <ClCompile Include="Source\Core\Buffer\VertexBuffer.cpp" />
+    <ClCompile Include="Source\Core\Buffer\DX12ConstantBuffer.cpp" />
+    <ClCompile Include="Source\Core\Buffer\DX12IndexBuffer.cpp" />
+    <ClCompile Include="Source\Core\Buffer\DX12RenderTarget.cpp" />
+    <ClCompile Include="Source\Core\Buffer\DX12VertexBuffer.cpp" />
+    <ClCompile Include="Source\Core\DX12CommandContext.cpp" />
+    <ClCompile Include="Source\Core\DX12Device.cpp" />
     <ClCompile Include="Source\Core\DX12Mesh.cpp" />
+    <ClCompile Include="Source\Core\DX12SwapChain.cpp" />
+    <ClCompile Include="Source\Core\DX12Viewport.cpp" />
+    <ClCompile Include="Source\Core\Memory\DX12DescriptorHeap.cpp" />
     <ClCompile Include="Source\Core\Shader\DX12Shader.cpp" />
+    <ClCompile Include="Source\Core\Shader\PixelShader.cpp" />
     <ClCompile Include="Source\Core\Shader\ShaderProgram.cpp" />
+    <ClCompile Include="Source\Core\Shader\VertexShader.cpp" />
     <ClCompile Include="Source\dx12pch.cpp" />
-    <ClCompile Include="Source\DX12Renderer.cpp" />
+    <ClCompile Include="Source\Core\DX12Renderer.cpp" />
     <ClCompile Include="Source\Utils\DX12Helper.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

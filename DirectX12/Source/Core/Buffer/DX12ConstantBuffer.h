@@ -1,11 +1,12 @@
 #pragma once
 
+#include "DX12Core.h"
 #include "d3dx12_include/directx/d3dx12.h"
 #include <wrl/client.h>
 #include <DirectXMath.h>
 #include <d3d12.h>
 #include <DX12Math.h>
-#include "Core/Graphics/IRenderer.h"
+#include "Core/Graphics/Renderer.h"
 #include "Utils/DX12Helper.h"
 
 namespace KRender
@@ -14,7 +15,7 @@ namespace KRender
 	using Microsoft::WRL::ComPtr;
 
 	template <typename T>
-	class DX12ConstantBuffer : public IBuffer
+	class KRENDER_API DX12ConstantBuffer : public IBuffer
 	{
 	public:
 		DX12ConstantBuffer(ID3D12Device* device, UINT32 numElements = 1) :
@@ -73,6 +74,7 @@ namespace KRender
 		{
 			mCbvDesc = cbvDesc;
 		}
+		ID3D12DescriptorHeap* GetCBVHeap() const { return mCbvHeap.Get(); }
 	private:
 		UINT32 mByteSize;
 		ID3D12Device* mBufferDevice;
