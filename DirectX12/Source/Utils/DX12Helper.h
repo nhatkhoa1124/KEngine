@@ -55,7 +55,7 @@ namespace KRender
 		Microsoft::WRL::ComPtr<ID3D12Resource>& uploadBuffer
 	)
 	{
-		Microsoft::WRL::ComPtr<ID3D12Resource> defaultBuffer;
+		Microsoft::WRL::ComPtr<ID3D12Resource> defaultBuffer = {};
 		// Create default buffer
 		CD3DX12_RESOURCE_DESC bufferDesc = CD3DX12_RESOURCE_DESC::Buffer(byteSize);
 		CD3DX12_HEAP_PROPERTIES heapProperties = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);

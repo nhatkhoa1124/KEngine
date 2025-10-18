@@ -6,7 +6,7 @@
 #include <DirectXMath.h>
 #include <d3d12.h>
 #include <DX12Math.h>
-#include "Core/Graphics/Renderer.h"
+#include "Core/Graphics/Buffer.h"
 #include "Utils/DX12Helper.h"
 
 namespace KRender
@@ -15,7 +15,7 @@ namespace KRender
 	using Microsoft::WRL::ComPtr;
 
 	template <typename T>
-	class KRENDER_API DX12ConstantBuffer : public IBuffer
+	class KRENDER_API DX12ConstantBuffer : public KEngine::IBuffer
 	{
 	public:
 		DX12ConstantBuffer(ID3D12Device* device, UINT32 numElements = 1) :
@@ -55,11 +55,7 @@ namespace KRender
 		}
 		void CopyData(int elementIndex, const T& data)
 		{
-			memcpy(mMappedData[elementIndex * mByteSize], &data, sizeof(T);
-		}
-		ID3D12Resource* GetResource() const
-		{
-			return mConstantBufferUploader.Get();
+			memcpy(mMappedData + (elementIndex * mByteSize), &data, sizeof(T));
 		}
 		void CreateCbvHeap()
 		{
@@ -74,7 +70,12 @@ namespace KRender
 		{
 			mCbvDesc = cbvDesc;
 		}
+		ID3D12Resource* GetResource() const
+		{
+			return mConstantBufferUploader.Get();
+		}
 		ID3D12DescriptorHeap* GetCBVHeap() const { return mCbvHeap.Get(); }
+		UINT32 GetByteSize() const { return mByteSize; }
 	private:
 		UINT32 mByteSize;
 		ID3D12Device* mBufferDevice;

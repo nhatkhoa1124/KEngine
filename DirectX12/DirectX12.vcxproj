@@ -152,6 +152,7 @@
     <ClInclude Include="Source\Core\DX12Core.h" />
     <ClInclude Include="Source\Core\DX12Device.h" />
     <ClInclude Include="Source\Core\DX12Mesh.h" />
+    <ClInclude Include="Source\Core\DX12MeshFactory.h" />
     <ClInclude Include="Source\Core\DX12SwapChain.h" />
     <ClInclude Include="Source\Core\DX12Viewport.h" />
     <ClInclude Include="Source\Core\Math\DX12Math.h" />
@@ -172,6 +173,7 @@
     <ClCompile Include="Source\Core\DX12CommandContext.cpp" />
     <ClCompile Include="Source\Core\DX12Device.cpp" />
     <ClCompile Include="Source\Core\DX12Mesh.cpp" />
+    <ClCompile Include="Source\Core\DX12MeshFactory.cpp" />
     <ClCompile Include="Source\Core\DX12SwapChain.cpp" />
     <ClCompile Include="Source\Core\DX12Viewport.cpp" />
     <ClCompile Include="Source\Core\Memory\DX12DescriptorHeap.cpp" />

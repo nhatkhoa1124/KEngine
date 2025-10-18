@@ -20,6 +20,7 @@ namespace KRender
 		void CreateRootSignature();
 		void CreateDefaultDesc();
 		void CreatePipelineStateObject();
+		void CreateInputLayout();
 		void Bind(ID3D12GraphicsCommandList* cmdList, ID3D12DescriptorHeap* cbvHeap, UINT cbvIndex = 0);
 		void BindPSO(ID3D12GraphicsCommandList* cmdList);
 		void BindRootSignature(ID3D12GraphicsCommandList* cmdList);

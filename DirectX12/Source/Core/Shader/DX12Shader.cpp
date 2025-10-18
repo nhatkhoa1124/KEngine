@@ -118,6 +118,7 @@ namespace KRender
 
 	void DX12Shader::CreatePipelineStateObject()
 	{
+		CreateInputLayout();
 		ID3DBlob* vsByteCode = mVertexShader.GetByteCode();
 		ID3DBlob* psByteCode = mPixelShader.GetByteCode();
 
@@ -145,5 +146,29 @@ namespace KRender
 		psoDesc.SampleDesc.Quality = m4xMsaaState ? (m4xMsaaQualityLevel - 1) : 0;
 
 		ThrowIfFailed(mShaderDevice->CreateGraphicsPipelineState(&psoDesc, IID_PPV_ARGS(mPSO.GetAddressOf())));
+	}
+	void DX12Shader::CreateInputLayout()
+	{
+		mInputLayout =
+		{
+			{
+				"POSITION",
+				0,
+				DXGI_FORMAT_R32G32B32_FLOAT,
+				0,
+				0,
+				D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,
+				0
+			},
+			{
+				"COLOR",
+				0,
+				DXGI_FORMAT_R32G32B32_FLOAT,
+				0,
+				12,
+				D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,
+				0
+			}
+		};
 	}
 }

@@ -1,10 +1,12 @@
 #pragma once
 
-#include <d3d12.h>
 #include "DX12Core.h"
+#include <d3d12.h>
+#include <DirectXMath.h>
 #include "Core/Graphics/Mesh.h"
-#include "DX12VertexBuffer.h"
-#include "DX12IndexBuffer.h"
+#include "DX12CommandContext.h"
+#include "Buffer/DX12VertexBuffer.h"
+#include "Buffer/DX12IndexBuffer.h"
 
 namespace KRender
 {
@@ -14,15 +16,16 @@ namespace KRender
 	public:
 		DX12Mesh(ID3D12Device* device, ID3D12GraphicsCommandList* cmdList);
 		~DX12Mesh() = default;
-		void Initialize() override;
-		void Render() override;
+		void SetMesh(std::vector<Vertex>& vertices, std::vector<UINT32> indices) override;
+		void DrawMesh() override;
 		void Shutdown() override;
 		inline size_t GetVertexCount() const override { return mVertices.size(); }
 		inline size_t GetIndexCount() const override { return mIndices.size(); }
 		void SetPosition(float x, float y, float z) override;
 		void SetRotation(float x, float y, float z) override;
 		void SetScale(float x, float y, float z) override;
-
+		void CreateVertexBuffer() override;
+		void CreateIndexBuffer() override;
 	private:
 		std::vector<Vertex> mVertices;
 		std::vector<UINT32> mIndices;
@@ -30,5 +33,11 @@ namespace KRender
 		std::unique_ptr<DX12IndexBuffer> mIndexBuffer;
 		ID3D12Device* mDevice;
 		ID3D12GraphicsCommandList* mCmdList;
+
+		// Transform data, can be made into another class
+		DirectX::XMFLOAT3 mPosition = { 0.0f, 0.0f, 0.0f };
+		DirectX::XMFLOAT3 mRotation = { 0.0f, 0.0f, 0.0f };
+		DirectX::XMFLOAT3 mScale = { 1.0f, 1.0f, 1.0f };
+
 	};
 }

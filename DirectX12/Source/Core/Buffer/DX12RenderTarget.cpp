@@ -55,7 +55,6 @@ namespace KRender
 	}
 	void DX12RenderTarget::BeginRender(ID3D12GraphicsCommandList* cmdList, const FLOAT* clearColor, FLOAT clearDepth, UINT8 clearStencil)
 	{
-		TransitionToRenderTarget(cmdList);
 		if (clearColor != nullptr)
 		{
 			cmdList->ClearRenderTargetView(GetRTV(), clearColor, 0, nullptr);

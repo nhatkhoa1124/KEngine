@@ -5,9 +5,7 @@
 #include <DirectXMath.h>
 #include <wrl/client.h>
 #include <d3d12.h>
-#include "Core/Graphics/Renderer.h"
-#include "DX12VertexBuffer.h"
-#include "DirectXColors.h"
+#include "Core/Graphics/Buffer.h"
 #include "Utils/DX12Helper.h"
 
 namespace KRender
@@ -15,11 +13,11 @@ namespace KRender
 	using Microsoft::WRL::ComPtr;
 
 	template <typename T>
-	class KRENDER_API DX12VertexBuffer : public IBuffer
+	class KRENDER_API DX12VertexBuffer : public KEngine::IBuffer
 	{
 	public:
 		DX12VertexBuffer(ID3D12Device* device, std::vector<T>& data) :
-			mBufferDevice{ std::move(data) },
+			mBufferDevice{ device },
 			mData{ data },
 			mVertexBufferView{}
 		{

@@ -8,7 +8,7 @@ namespace Win32
 	{
 	public:
 		EngineWindow();
-		~EngineWindow();
+		~EngineWindow() = default;
 		void InitializeWindow(const std::wstring& title, const std::wstring& className, UINT width, UINT height);
 		void RenderWindow();
 		void CloseWindow() const;

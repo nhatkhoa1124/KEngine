@@ -18,6 +18,7 @@ namespace KRender
 	{
 		SetViewport(topLeftX, topLeftY, width, height, minDepth, maxDepth);
 		SetScissorRectangle(topLeftX, topLeftY, topLeftX + width, topLeftY + height);
+		Apply();
 	}
 
 	void DX12Viewport::SetViewport(float topLeftX, float topLeftY, float width, float height,

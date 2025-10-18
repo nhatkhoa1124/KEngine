@@ -13,14 +13,6 @@ namespace Win32
 
 	}
 
-	EngineWindow::~EngineWindow()
-	{
-		if (mHWnd)
-		{
-			DestroyWindow(mHWnd);
-		}
-	}
-
 	void EngineWindow::InitializeWindow(const std::wstring& title, const std::wstring& className, UINT width, UINT height)
 	{
 		mTitle = title;

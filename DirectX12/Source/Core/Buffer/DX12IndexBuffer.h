@@ -1,7 +1,7 @@
 #pragma once
 
 #include "DX12Core.h"
-#include "Core/Graphics/Renderer.h"
+#include "Core/Graphics/Buffer.h"
 #include "d3dx12_include/directx/d3dx12.h"
 #include <wrl/client.h>
 #include <d3d12.h>
@@ -10,14 +10,14 @@
 namespace KRender
 {
 	using Microsoft::WRL::ComPtr;
-	class KRENDER_API DX12IndexBuffer : public IBuffer
+	class KRENDER_API DX12IndexBuffer : public KEngine::IBuffer
 	{
 	public:
 		DX12IndexBuffer(ID3D12Device* device, std::vector<UINT32> indices);
 		~DX12IndexBuffer() = default;
 		void InitBuffer(ID3D12GraphicsCommandList* cmdList);
 		void CreateBufferView() override;
-		void Bind(ID3D12GraphicsCommandList* cmdList);
+		void Bind(ID3D12GraphicsCommandList* cmdList) const;
 	private:
 		std::vector<UINT32> mIndices;
 		UINT64 mByteSize;

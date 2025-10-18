@@ -9,6 +9,7 @@ namespace KRender
 	ShaderProgram::ShaderProgram() :
 		mCompileFlags{ 0 }
 	{
+		mByteCode.Reset();
 #if defined(DEBUG) || defined(_DEBUG)
 		mCompileFlags = D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION;
 #endif
@@ -46,12 +47,12 @@ namespace KRender
 	}
 	void ShaderProgram::LoadShaderBinary(const std::wstring& filename)
 	{
-		std::fstream fin(filename, std::ios::binary);
+		std::ifstream fin(filename, std::ios::binary);
 		fin.seekg(0, std::ios_base::end);
 		std::ifstream::pos_type size = (size_t)(fin.tellg());
 		fin.seekg(0, std::ios_base::beg);
 
-		ThrowIfFailed(D3DCreateBlob(size, mByteCode.GetAddressOf()));
+		ThrowIfFailed(D3DCreateBlob(size, &mByteCode));
 		fin.read((char*)mByteCode->GetBufferPointer(), size);
 		fin.close();
 	}

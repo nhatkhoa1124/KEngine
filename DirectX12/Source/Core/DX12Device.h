@@ -15,7 +15,7 @@ namespace KRender
 		~DX12Device() = default;
 		void Initialize(bool debugEnabled);
 		inline ID3D12Device* GetDevice() const { return mDevice.Get(); }
-		inline IDXGIFactory6* GetFactory() const { return mDxgiFactory.Get(); }
+		inline ComPtr<IDXGIFactory6> GetFactory() const { return mDxgiFactory; }
 		inline void EnableDebugMode(bool debugEnabled) { mDebugEnabled = debugEnabled; }
 	private:
 		void EnableDebugLayer() const;

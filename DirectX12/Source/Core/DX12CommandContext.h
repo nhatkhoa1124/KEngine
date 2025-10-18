@@ -11,10 +11,10 @@ namespace KRender
 	class KRENDER_API DX12CommandContext
 	{
 	public:
-		DX12CommandContext() = default;
+		DX12CommandContext(ID3D12Device* device);
 		~DX12CommandContext();
 
-		void Initialize(ID3D12Device* device);
+		void Initialize();
 		void Reset();
 		void Close();
 		void Execute();
@@ -22,6 +22,7 @@ namespace KRender
 		inline ID3D12GraphicsCommandList* GetCommandList() const { return mCmdList.Get(); }
 		inline ID3D12CommandQueue* GetCommandQueue() const { return mCmdQueue.Get(); }
 		inline ID3D12CommandAllocator* GetCommandAllocator() const { return mCmdAllocator.Get(); }
+		inline bool IsRecording() const { return mIsRecording; }
 	private:
 		void CreateCommandList();
 		void CreateCommandQueue();
@@ -36,5 +37,6 @@ namespace KRender
 		UINT64 mCurrentFenceValue = 0;
 		HANDLE mFenceEvent = nullptr;
 		ID3D12Device* mDevice = nullptr;
+		bool mIsRecording = false;
 	};
 }

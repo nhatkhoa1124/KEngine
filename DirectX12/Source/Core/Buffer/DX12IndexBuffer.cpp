@@ -28,7 +28,7 @@ namespace KRender
 		mIndexBufferView.Format = DXGI_FORMAT_R32_UINT;
 		mIndexBufferView.SizeInBytes = mByteSize;
 	}
-	void DX12IndexBuffer::Bind(ID3D12GraphicsCommandList* cmdList)
+	void DX12IndexBuffer::Bind(ID3D12GraphicsCommandList* cmdList) const
 	{
 		cmdList->IASetIndexBuffer(&mIndexBufferView);
 	}

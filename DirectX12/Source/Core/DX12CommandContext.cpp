@@ -5,9 +5,19 @@
 
 namespace KRender
 {
-
+	DX12CommandContext::DX12CommandContext(ID3D12Device* device) :
+		mDevice{ device }
+	{
+	}
 	DX12CommandContext::~DX12CommandContext()
 	{
+		if (mIsRecording) {
+			// Log warning - command list was left open!
+#ifdef _DEBUG
+			OutputDebugStringA("WARNING: CommandContext destroyed with open command list!\n");
+#endif
+			Close(); // Ensure it's closed
+		}
 		if (mFence && mFenceEvent)
 		{
 			Flush();
@@ -18,10 +28,8 @@ namespace KRender
 		}
 	}
 
-	void DX12CommandContext::Initialize(ID3D12Device* device)
+	void DX12CommandContext::Initialize()
 	{
-		mDevice = device;
-
 		mFenceEvent = CreateEventEx(nullptr, nullptr, false, EVENT_ALL_ACCESS);
 		if (mFenceEvent == nullptr)
 		{
@@ -30,23 +38,31 @@ namespace KRender
 		CreateCommandQueue();
 		CreateCommandAllocator();
 		CreateCommandList();
+		mIsRecording = true;
 		CreateFence();
 		Close();
 	}
 
 	void DX12CommandContext::Reset()
 	{
+		WaitForFenceValue(mCurrentFenceValue);
 		ThrowIfFailed(mCmdAllocator->Reset());
 		ThrowIfFailed(mCmdList->Reset(mCmdAllocator.Get(), nullptr));
+		mIsRecording = true;
 	}
 
 	void DX12CommandContext::Close()
 	{
 		ThrowIfFailed(mCmdList->Close());
+		mIsRecording = false;
 	}
 
 	void DX12CommandContext::Execute()
 	{
+		if (mIsRecording) {
+			// Option A: Auto-close (safe)
+			Close();
+		}
 		ID3D12CommandList* commandLists[] = { mCmdList.Get() };
 		mCmdQueue->ExecuteCommandLists(_countof(commandLists), commandLists);
 		mCurrentFenceValue++;
@@ -92,7 +108,6 @@ namespace KRender
 		{
 			ThrowIfFailed(mFence->SetEventOnCompletion(mCurrentFenceValue, mFenceEvent));
 			WaitForSingleObject(mFenceEvent, INFINITE);
-			CloseHandle(mFenceEvent);
 		}
 	}
 }

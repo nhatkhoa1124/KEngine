@@ -10,7 +10,8 @@ namespace KRender
 		mMaxDescriptors{ count },
 		mUsedDescriptors{ 0 },
 		mHeapType{ type },
-		mShaderVisible{ shaderVisible }
+		mShaderVisible{ shaderVisible },
+		mHeap{}
 	{
 		CreateHeap(device);
 		mCpuHeapStart = mHeap->GetCPUDescriptorHandleForHeapStart();
